@@ -23,7 +23,7 @@ $stopVM
 # $vmUsername = "cuzun"
 # $vmPw = "0MMz!Q4J2gD5"
 
-if($type -ne "win10" -and $type -ne "ubuntu" -and $type -ne "win7" -and $type -ne "server2016" -and $type -ne "winsql2019")
+if($type -ne "win10" -and $type -ne "ubuntu" -and $type -ne "win7" -and $type -ne "server2016" -and $type -ne "server2019" -and $type -ne "winsql2019")
 {
     Write-Host "Invalid type" : $type
     return
@@ -36,7 +36,7 @@ Write-Host "[$(Get-Date -Format "yyyy-MM-dd HH:mm:ss")] : Starting"
 #Get-AzSubscription
 
 $vMSize = "Standard_D2"
-if($type -eq "server2016")
+if($type -eq "server2016" -or $type -ne "server2019")
 {
     $vMSize = "Standard_D4s_v3"
 }
@@ -105,6 +105,11 @@ elseif($type -eq "server2016")
 {
     $vm = Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName $vmName -Credential $vmCredentials -EnableAutoUpdate -TimeZone "Romance Standard Time"
     $vm = Set-AzVMSourceImage -VM $vm -PublisherName "MicrosoftWindowsServer" -Offer "WindowsServer" -Skus "2016-Datacenter" -Version "latest"
+}
+elseif($type -eq "server2019")
+{
+    $vm = Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName $vmName -Credential $vmCredentials -EnableAutoUpdate -TimeZone "Romance Standard Time"
+    $vm = Set-AzVMSourceImage -VM $vm -PublisherName "MicrosoftWindowsServer" -Offer "WindowsServer" -Skus "2019-Datacenter" -Version "latest"
 }
 elseif($type -eq "winsql2019")
 {
