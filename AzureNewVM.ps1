@@ -36,7 +36,7 @@ Write-Host "[$(Get-Date -Format "yyyy-MM-dd HH:mm:ss")] : Starting"
 #Get-AzSubscription
 
 $vMSize = "Standard_D2"
-if($type -eq "server2016" -or $type -ne "server2019")
+if($type -eq "server2016" -or $type -eq "server2019" -or $type -eq "winsql2019")
 {
     $vMSize = "Standard_D4s_v3"
 }
